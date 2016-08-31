@@ -14,6 +14,10 @@ app.get('/jquery/jquery.js', function(req, res){
     res.sendFile(__dirname + '/node_modules/jquery/dist/jquery.min.js');
 });
 
+app.get('/hammer/hammer.js', function(req, res){
+    res.sendFile(__dirname + '/node_modules/hammerjs/hammer.min.js');
+});
+
 var clients = [];
 var players = {
     bengler: null,
@@ -25,14 +29,6 @@ function registerClient(socket) {
     clients.push(socket);
     enumerateClient(socket);
     console.log('user ' + socket.id + ' ('+clients.length+') connected');
-
-    //Reply with device id
-    //socket.emit('devices',socket.id);
-
-    //Activate bengler
-    if (players.bengler == null) {
-        spawnPlayer(socket,'bengler');
-    }
 }
 
 function enumerateClient(socket) {
@@ -82,6 +78,13 @@ io.on('connection', function(socket){
 
     socket.on('leave', function(role){
         movePlayer(role);
+    });
+
+    socket.on('spawn', function(cmd){
+        if (cmd==="me") {
+            spawnPlayer(socket, "bengler");
+        }
+
     });
 /*
     socket.on('chat message', function(msg){
