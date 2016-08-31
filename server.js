@@ -16,10 +16,14 @@ app.get('/jquery/jquery.js', function(req, res){
 
 //var clients = [];
 
+var devicesAmount = 0;
+
 io.on('connection', function(socket){
     //clients.push(socket);
-    console.log('user ' + socket.id + ' connected');
-
+    console.log('user ' + socket.id + '('+devicesAmount+') connected');
+    socket.emit("devices",devicesAmount);
+    devicesAmount = devicesAmount + 1;
+/*
     socket.on('disconnect', function(){
         //clients.rem
         console.log('user' +socket.id+ 'disconnected');
@@ -28,7 +32,7 @@ io.on('connection', function(socket){
     socket.on('chat message', function(msg){
         console.log('message: ' + msg);
         io.emit('chat message', msg);
-    });
+    });*/
 });
 
 
