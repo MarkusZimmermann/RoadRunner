@@ -1,0 +1,11 @@
+{
+  "name": "RoadRunner",
+  "version": "0.0.1",
+  "description": "Doktorandenworkshop",
+  "dependencies": {
+    "express": "^4.10.2"
+  },
+  "scripts" :{
+    "Run RoadRunner!" : "node server.js"
+  }
+}
