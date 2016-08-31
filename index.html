@@ -3,13 +3,15 @@
 <head>
     <title>RoadRunner</title>
     <style>
-        /*animation @bengler {
-            20%: background-image:url(a.jpg);
+        #index {
+            position:absolute;
+            font-size:200px;
+            color:silver;
         }
-        .animation {width:200px;height:200px;}
-        .bengler {
-            animation: @bengler 1s;
-        }*/
+        .player {
+            visibility:hidden;
+            font-size:24px;
+        }
     </style>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/jquery/jquery.js"></script>
@@ -27,16 +29,25 @@
         });
 */
         $(function() {
-            socket.on('devices', function (msg) {
-                $('#device').text(msg);
+            socket.on('index', function (index) {
+                $('#index').text(index);
             });
+
+            socket.on('spawn', function (role) {
+                $('.player').filter('.' + role).css('visibility','visible')
+            });
+
+            $('.player.bengler').click(function(){
+                socket.emit('leave','bengler');
+                $('.player.bengler').css('visibility','hidden');
+            })
         });
 
     </script>
 </head>
 <body>
-<p>Gerätenummer: <span id="device"></span></p>
+<p id="index"></p>
 
-<div class="animation bengler translate">roadrunner</div>
+<button class="player bengler">Prof.</button>
 </body>
 </html>
