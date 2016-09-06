@@ -2,33 +2,28 @@
  * Created by Markus Zimmermann on 31.08.2016.
  */
 
-var app = require('express')();
+//Dependencies from NPM
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
-});
+//Static web server
+app.use(express.static('public'));
+app.use('/lib',express.static('node_modules'));
 
-app.get('/jquery/jquery.js', function(req, res){
-    res.sendFile(__dirname + '/node_modules/jquery/dist/jquery.min.js');
-});
-
-app.get('/hammer/hammer.js', function(req, res){
-    res.sendFile(__dirname + '/node_modules/hammerjs/hammer.min.js');
-});
-
+//Data objects for our game
 var clients = [];
-var players = {
-    bengler: null,
-    dietrich: null
-};
-var activeBengler;
 
 function registerClient(socket) {
+    //Store client in array
     clients.push(socket);
+    //Assign number to client
     enumerateClient(socket);
-    console.log('user ' + socket.id + ' ('+clients.length+') connected');
+    //Assign empty player set
+    socket.players = []
+
+    console.log('+ ' + socket.id + ' ('+clients.length+') connected');
 }
 
 function enumerateClient(socket) {
@@ -39,12 +34,13 @@ function enumerateClient(socket) {
 function deregisterClient(socket) {
     //Remove socket from array
     clients.splice(clients.indexOf(socket),1);
+    console.log('- ' + socket.id + ' disconnected');
+
     //Check if client has any active players
-    for (role in players) {
-        if (players[role] == socket) {
-            movePlayer(role);
-        }
-    }
+    /*
+    for (player in socket.players) {
+        movePlayer(socket, socket.players[player]);
+    }*/
     //Re-enumerate
     for (index in clients) {
         enumerateClient(clients[index]);
@@ -52,45 +48,42 @@ function deregisterClient(socket) {
 }
 
 function spawnPlayer(socket, role) {
-    players[role] = socket;
     if (socket != undefined) {
+        //socket.players.push(role);
         socket.emit('spawn',role);
     }
 }
 
-function movePlayer(role) {
-    var socket = players[role];
-    var nextId = (clients.indexOf(socket) + 1) % clients.length;
-    if (clients[nextId]) {
-    spawnPlayer(clients[nextId], role);
-    } else {
-        players[role] = null;
+function movePlayer(currentSocket, role) {
+    var nextId = (clients.indexOf(currentSocket) + 1) % clients.length;
+    var nextSocket = clients[nextId];
+
+    //Find player in current socket
+    /*var roleIndex = currentSocket.players.indexOf('role');
+    if (roleIndex >= 0) {
+        currentSocket.players.splice(roleIndex,1);
+    }*/
+    if (nextSocket) {
+        spawnPlayer(nextSocket, role);
     }
 }
 
 io.on('connection', function(socket){
-    registerClient(socket);
 
+    registerClient(socket);
 
     socket.on('disconnect', function(){
         deregisterClient(socket);
     });
 
+    socket.on('spawn', function(role){
+        spawnPlayer(socket, role);
+    });
+
     socket.on('leave', function(role){
-        movePlayer(role);
+        movePlayer(socket, role);
     });
 
-    socket.on('spawn', function(cmd){
-        if (cmd==="me") {
-            spawnPlayer(socket, "bengler");
-        }
-
-    });
-/*
-    socket.on('chat message', function(msg){
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
-    });*/
 });
 
 

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <title>RoadRunner</title>
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+
+    <!-- DEPENDENCIES -->
+    <link rel="stylesheet" href="style.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <!-- OUR APP CODE -->
+    <script src="main.js"></script>
+</head>
+<body>
+
+<div id="index"></div>
+<div id="admin">
+    You're admin and tapping kills!
+    <button class="btn btn-danger" onclick="spawn('bengler');">Bengler</button>
+    <button class="btn btn-default" onclick="spawn('dietrich');">Dietrich</button>
+    <button class="btn btn-default" onclick="spawn('goetze');">Goetze</button>
+    <button class="btn btn-default" onclick="spawn('prasch');">Prasch</button>
+    <button class="btn btn-default" onclick="spawn('rommerskirchen');">Rommerskirchen</button>
+    <button class="btn btn-default" onclick="spawn('weinbeer');">Weinbeer</button>
+    <button class="btn btn-default" onclick="spawn('yang');">Yang</button>
+    <button class="btn btn-default" onclick="spawn('zimmermann');">Zimmermann</button>
+</div>
+<audio id="bengler" src="sounds/bengler.m4a" preload="auto"></audio>
+<audio id="benglerTalk" src="sounds/benglerTalk.m4a" preload="auto"></audio>
+<audio id="dietrich" src="sounds/dietrich.m4a" preload="auto"></audio>
+<audio id="goetze" src="sounds/goetze.m4a" preload="auto"></audio>
+<audio id="prasch" src="sounds/prasch.m4a" preload="auto"></audio>
+<audio id="rommerskirchen" src="sounds/rommerskirchen.m4a" preload="auto"></audio>
+<audio id="weinbeer" src="sounds/weinbeer.m4a" preload="auto"></audio>
+<audio id="yang" src="sounds/yang.m4a" preload="auto"></audio>
+<audio id="zimmermann" src="sounds/zimmermann.m4a" preload="auto"></audio>
+
+</body>
+</html>

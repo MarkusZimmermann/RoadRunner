@@ -1,0 +1,101 @@
+body {
+    overflow:hidden;
+    margin:0;
+    margin-top:64px;
+    padding:0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+#admin {
+    position:absolute;
+    display:none;
+}
+#index {
+    margin:0;
+    padding:0;
+    position:absolute;
+
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+
+    font-family:sans-serif;
+    font-size:200px;
+    text-align:center;
+    color:silver;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+/*
+@keyframes player {
+
+    0%   {background-position: 0px 0px;}
+    24.99999%   {background-position: 0px 0px;}
+    25%   {background-position: -250px 0px}
+    49.99999%   {background-position: -250px 0px}
+    50%   {background-position: -500px 0px}
+    74.99999%   {background-position: -500px 0px}
+    75%   {background-position: -750px 0px}
+}*/
+
+.player {
+
+    position:absolute;
+    width:212px;
+    height:300px;
+    bottom:0px;
+    left:-212px;
+
+    font-size:24px;
+    /*background-image: url(/images/runner1.png);*/
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+
+    background-image: url(/images/runner.gif);
+    background-repeat:no-repeat;
+    background-position: bottom;
+
+    /*background-size: 1000px 250px;
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+    animation: player 1s linear infinite;*/
+}
+
+.player div {
+    position:absolute;
+    width:100%;
+    height:140px;
+    overflow:hidden;
+    background-position:center top;
+    background-repeat:no-repeat;
+}
+.player.bengler div {
+    background-image:url(images/bengler.png);
+}
+.player.dietrich div {
+    background-image:url(images/dietrich.png);
+}
+.player.goetze div {
+    background-image:url(images/goetze.png);
+}
+.player.prasch div {
+    background-image:url(images/prasch.png);
+}
+.player.rommerskirchen div {
+    background-image:url(images/rommerskirchen.png);
+}
+.player.weinbeer div {
+    background-image:url(images/weinbeer.png);
+}
+.player.yang div {
+    background-image:url(images/yang.png);
+}
+.player.zimmermann div {
+    background-image:url(images/zimmermann.png);
+}
